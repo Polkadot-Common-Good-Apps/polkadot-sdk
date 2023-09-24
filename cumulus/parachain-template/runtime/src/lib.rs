@@ -482,6 +482,38 @@ impl pallet_parachain_template::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 }
 
+impl pallet_like_randomness::Config for Runtime {
+	type RuntimeEvent = RuntimeEvent;
+}
+
+parameter_types! {
+	pub const LotteryPalletId: PalletId = PalletId(*b"py/lotto");
+	pub const MaxCalls: u32 = 10;
+	pub const MaxGenerateRandom: u32 = 10;
+}
+
+ord_parameter_types! {
+	pub const TreasuryAccount: AccountId32 = AccountId32::new(
+		[
+			0,109,111,100,108,112,121,47,116,114,115,114,121,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+		]);
+}
+
+impl pallet_custom_lottery::Config for Runtime {
+	type PalletId = LotteryPalletId;
+	type RuntimeCall = RuntimeCall;
+	type Currency = Balances;
+	type Randomness = LikeRandomness;
+	type PalletsOrigin = OriginCaller;
+	type RuntimeEvent = RuntimeEvent;
+	type ManagerOrigin = EnsureRoot<AccountId>;
+	type MaxCalls = MaxCalls;
+	type ValidateCall = Lottery;
+	type MaxGenerateRandom = MaxGenerateRandom;
+	type RelayChainTreasuryAccount = TreasuryAccount;
+	type WeightInfo = pallet_custom_lottery::weights::SubstrateWeight<Runtime>;
+}
+
 // Create the runtime by composing the FRAME pallets that were previously configured.
 construct_runtime!(
 	pub enum Runtime
@@ -514,6 +546,8 @@ construct_runtime!(
 
 		// Template
 		TemplatePallet: pallet_parachain_template = 50,
+		LikeRandomness: pallet_like_randomness = 51,
+		Lottery: pallet_custom_lottery = 52,
 	}
 );
 

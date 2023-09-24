@@ -1,0 +1,45 @@
+[settings]
+timeout = 1000
+
+[relaychain]
+chain = "kusama-local"
+default_command = "./bin/polkadot"
+
+  [[relaychain.nodes]]
+  name = "alice"
+  validator = true
+  ws_port = 10000
+  extra_args = [ "--force-authoring -lparachain=debug" ]
+
+  [[relaychain.nodes]]
+  name = "bob"
+  validator = true
+  extra_args = [ "--force-authoring -lparachain=debug" ]
+
+  [[relaychain.nodes]]
+  name = "charlie"
+  validator = true
+  extra_args = [ "--force-authoring -lparachain=debug" ]
+
+  [[relaychain.nodes]]
+  name = "dave"
+  validator = true
+  extra_args = [ "--force-authoring -lparachain=debug" ]
+
+[[parachains]]
+id = 2000
+add_to_genesis = true
+cumulus_based = true
+chain = "local"
+
+  [[parachains.collators]]
+  name = "para1"
+  command = "./target/release/parachain-template-node"
+  ws_port = 20000
+  args = ["--force-authoring --log=xcm=trace"]
+
+  [[parachains.collators]]
+  name = "para2"
+  command = "./target/release/parachain-template-node"
+  ws_port = 21000
+  args = ["--force-authoring --log=xcm=trace"]

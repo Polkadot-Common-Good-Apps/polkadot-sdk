@@ -23,6 +23,9 @@ smallvec = "1.11.0"
 
 # Local
 pallet-parachain-template = { path = "../pallets/template", default-features = false }
+pallet-like-randomness = { path = "../pallets/like-randomness", default-features = false }
+pallet-custom-lottery = { path = "../pallets/lottery", default-features = false }
+
 
 # Substrate
 frame-benchmarking = { path = "../../../substrate/frame/benchmarking", default-features = false, optional = true}
@@ -100,9 +103,11 @@ std = [
 	"pallet-session/std",
 	"pallet-sudo/std",
 	"pallet-timestamp/std",
+	"pallet-custom-lottery/std",
 	"pallet-transaction-payment-rpc-runtime-api/std",
 	"pallet-transaction-payment/std",
 	"pallet-xcm/std",
+	"pallet-like-randomness/std",
 	"parachain-info/std",
 	"polkadot-parachain-primitives/std",
 	"polkadot-runtime-common/std",
